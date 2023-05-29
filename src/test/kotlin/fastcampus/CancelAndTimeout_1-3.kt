@@ -117,7 +117,7 @@ class `CancelAndTimeout_1-3` {
     }
 
     @Test
-    fun `cancel을 하고 join 을 하는 일은 빈버하다`() {
+    fun `cancel을 하고 join 을 하는 일은 빈번하다`() {
         runBlocking {
             doCountWithCancelAndJoin()
         }
