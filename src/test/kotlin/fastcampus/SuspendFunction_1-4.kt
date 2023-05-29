@@ -6,7 +6,7 @@ import java.lang.IllegalStateException
 import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
-class SuspendFunction {
+class `SuspendFunction_1-4` {
 
     private suspend fun getRandom1(): Int {
         delay(1000L)

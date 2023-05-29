@@ -5,7 +5,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 
-class ScopeBuilder {
+class `ScopeBuilder_1-1` {
 
     @Test
     fun `코루틴 빌더의 수신 객체`() = runBlocking {

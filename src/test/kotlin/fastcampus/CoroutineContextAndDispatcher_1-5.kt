@@ -4,7 +4,7 @@ import kotlinx.coroutines.*
 import org.junit.jupiter.api.Test
 import kotlin.system.measureTimeMillis
 
-class CoroutineContextAndDispatcher {
+class `CoroutineContextAndDispatcher_1-5` {
 
     @Test
     fun `dispatchers 여러 종류`() {

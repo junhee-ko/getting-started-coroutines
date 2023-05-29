@@ -3,7 +3,7 @@ package fastcampus
 import kotlinx.coroutines.*
 import org.junit.jupiter.api.Test
 
-class CancelAndTimeout {
+class `CancelAndTimeout_1-3` {
 
     private suspend fun doOneTwoThree() {
         coroutineScope {

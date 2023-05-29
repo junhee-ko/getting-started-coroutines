@@ -3,7 +3,7 @@ package fastcampus
 import kotlinx.coroutines.*
 import org.junit.jupiter.api.Test
 
-class StructuredConcurrency {
+class `StructuredConcurrency_1-2` {
 
     private suspend fun doOneTwoThree() {
         // 부모 코루틴은 자식이 끝날 때 까지 기다린다
