@@ -203,6 +203,7 @@ class `CancelAndTimeout_1-3` {
 
     private suspend fun doOneTwoThreeWithContext() = coroutineScope {
         val job1 = launch {
+            // 취소가 불가능한 블록 ex) 무조건 해제를 해애햐는 자원
             withContext(NonCancellable) {
                 println("launch1: ${Thread.currentThread()}")
                 delay(1000L)
