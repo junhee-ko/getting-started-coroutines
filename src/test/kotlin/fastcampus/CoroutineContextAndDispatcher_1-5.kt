@@ -131,7 +131,10 @@ class `CoroutineContextAndDispatcher_1-5` {
             }
 
             delay(500L)
-            job.cancelAndJoin() // 여기서도 Job 만든 launch 블럭 코드를 기다리지 않음. 밑에서 딜레이를 주지 않으면 바로 종료됨
+
+            // 여기서도 Job 만든 launch 블럭 코드를 기다리지 않음. 밑에서 딜레이를 주지 않으면 바로 종료됨
+            // launch1 이 더이상 자식이 아니기 때문에, 기다리지 않으므로
+            job.cancelAndJoin()
             delay(1000L)
         }
     }
