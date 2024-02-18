@@ -5,8 +5,20 @@ import log
 import org.junit.jupiter.api.Test
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.coroutines.coroutineContext
 
 class Chapter7 {
+
+    @Test
+    fun `CoroutineName 이나 Job 은 CoroutineContext 인터페이스를 구현한 CoroutineContext Element 를 구현한다`() {
+        val coroutineName: CoroutineName = CoroutineName("A")
+        val element: CoroutineContext.Element = coroutineName
+        val context: CoroutineContext = element
+
+        val job: Job = Job()
+        val jobElement: CoroutineContext.Element = job
+        val jobContext: CoroutineContext = jobElement
+    }
 
     @Test
     fun `CoroutineContext 는 컬렉션과 비슷해서, get 을 이용해서 유일한 키를 가진 원소를 찾을 수 있다`() {
@@ -111,6 +123,30 @@ class Chapter7 {
             log("before print result")
             log("The answer is ${result.await()}")
         }
+    }
+
+    @Test
+    fun `coroutineContext 프로퍼티는 모든 중단 스코프에서 사용 가능하다`() {
+        runBlocking {
+            withContext(CoroutineName("Outer")){
+                log(1)
+                printName()
+                log(2)
+                launch(CoroutineName("Inner")) {
+                    log(3)
+                    printName()
+                }
+                log(4)
+                delay(10)
+                log(5)
+                printName()
+            }
+        }
+    }
+
+    // 컨텍스트는 중단 함수 사이에 전달되는 continuation 객체가 참조하고 있다.
+    private suspend fun printName(){
+        log(coroutineContext[CoroutineName]?.name)
     }
 
     @Test
