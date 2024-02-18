@@ -7,10 +7,24 @@ import org.junit.jupiter.api.Test
 class Chapter8 {
 
     @Test
+    fun `자식이 부모로부터 컨텍스트를 물려받는 건 코루틴 빌더의 가장 기본적인 특징이다`() {
+        runBlocking(CoroutineName("jko-main")) {
+            val name: String? = coroutineContext[CoroutineName]?.name
+            log("1: $name")
+
+            launch {
+                delay(1000)
+                val name: String? = coroutineContext[CoroutineName]?.name
+                log("2: $name")
+            }
+        }
+    }
+
+    @Test
     fun `job 의 여러 상태`() {
         runBlocking {
             val job1 = Job()
-            log(job1)
+            log(job1)   // 빌더로 생성된 잡은 완료시킬 때 까지 active
 
             job1.complete()
             log(job1)
@@ -19,7 +33,7 @@ class Chapter8 {
                 delay(100)
             }
             log(job2)
-            job2.join()
+            job2.join() // 코루틴이 완료되는 걸 기다리기 위해 사용한다.
             log(job2)
 
             val job3 = launch(start = CoroutineStart.LAZY) {
@@ -33,7 +47,18 @@ class Chapter8 {
         }
     }
 
-    // 모둔 코루틴은 자신만의 Job 을 생성한다.
+    @Test
+    fun `Job 을 접근하기 쉽게 만들어주는 확장 프로퍼티도 있다`() {
+        runBlocking {
+            val job1: Job? = coroutineContext[Job]
+            log(job1)
+
+            val job2: Job = coroutineContext.job
+            log(job2)
+        }
+    }
+
+    // 모든 코루틴은 자신만의 Job 을 생성한다.
     // 인자 또는 부모 코루틴으로부터 온 잡은 새로운 잡의 부모로 사용된다.
     @Test
     fun `Job 은 코루틴이 상속하지 않는 유일한 코루틴 컨텍스트이다`() {
@@ -90,6 +115,7 @@ class Chapter8 {
         }
     }
 
+    // 모든 자식이 마지막 상태가 될 때까지 기다리는데 활용할 수 있다.
     @Test
     fun `Job 인터페이스에는 모든 자식을 참조할 수 있는 children 프로퍼티도 있다`() {
         runBlocking {
@@ -111,6 +137,7 @@ class Chapter8 {
         }
     }
 
+    // 흔히 하는 실수가, Job() 팩토리 함수를 사용해 잡을 생성하고, 다른 코루틴의 부모로 지정한 뒤에 join 을 호출하는 것이다.
     @Test
     fun `자식 코루틴이 모두 작업을 마쳐도 Job 이 여전히 active 상태인 경우`() {
         runBlocking {
