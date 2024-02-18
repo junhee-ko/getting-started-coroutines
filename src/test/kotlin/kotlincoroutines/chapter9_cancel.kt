@@ -59,6 +59,24 @@ class Chapter9 {
     }
 
     @Test
+    fun `cancel 과 join 을 함께 호출할 수 있는 방법`() {
+        runBlocking {
+            val job = launch {
+                repeat(1_000) {
+                    delay(100)
+                    Thread.sleep(100) // 오래 걸리는 작업
+                    log("printing $it")
+                }
+            }
+
+            delay(1000)
+            job.cancelAndJoin()
+            log("Cancelled successfully")
+        }
+    }
+
+    // Job 팩토리 함수로 생성된 잡
+    @Test
     fun `Job 에 딸린 수많은 코루틴을 한 번에 취소`() {
         runBlocking {
             val job = Job()
@@ -221,6 +239,7 @@ class Chapter9 {
             }
 
             delay(1000)
+            log(1)
             job.cancelAndJoin()
             log("cancelled")
             delay(1000)
