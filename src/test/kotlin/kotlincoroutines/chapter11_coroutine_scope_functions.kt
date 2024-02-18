@@ -204,7 +204,7 @@ class Chapter11 {
                     delay(1000)
                     log("DONE")
                 }
-            } catch (e: TimeoutCancellationException) {
+            } catch (e: TimeoutCancellationException) { // CancellationException 의 서브타입
                 log("canceled, $e")
             }
         }
